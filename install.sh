@@ -15,7 +15,7 @@ if [[ -z $CONFIGDIR/config ]]; then
 fi
 
 # run fcitx to get default config
-#exec fcitx
+exec fcitx > /dev/null 2>&1 && \
 
 # check the existence of fcitx config dir and put config to it
 if [[ -e ~/.config/fcitx/config ]]; then
@@ -26,7 +26,7 @@ if [[ -e ~/.config/fcitx/config ]]; then
 	# true
 	cp -rb $CONFIGDIR/* ~/.config/fcitx/ && \
 	echo "INSTALL CONFIGS IS SUCCESSFULLY !!!!" && \
-	exec fcitx -r && \
+	exec fcitx -r > /dev/null 2>&1 && \
 	exit 0
 fi
 
