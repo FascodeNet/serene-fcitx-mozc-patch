@@ -8,7 +8,7 @@ if [[ -z $DISPLAY ]]; then
 fi
 
 # path to "config" dir
-CONFIGDIR=~/config
+CONFIGDIR=~/serene-fcitx-mozc-patch/config
 if [[ -z $CONFIGDIR/config ]]; then
 	echo "No configration file found. Please configration fcitx by yourself."
 	exit 1
