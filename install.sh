@@ -15,25 +15,18 @@ if [[ -z $CONFIGDIR/config ]]; then
 fi
 
 # run fcitx to get default config
-exec fcitx
+#exec fcitx
 
 # check the existence of fcitx config dir and put config to it
-if [[ -e ~/.config/fctx/config ]]; then
+if [[ -e ~/.config/fcitx/config ]]; then
 
 	# installing message
 	echo "Placing custom settings to ~/.config/fcitx/ now..."
 
 	# true
 	cp -rb $CONFIGDIR/* ~/.config/fcitx/ && \
-	echo "INSTALL CONFIGS IS SUCCESSFULLY !!!!"
+	echo "INSTALL CONFIGS IS SUCCESSFULLY !!!!" && \
 	exit 0
-
-#else
-#
-#	# false
-#	echo "Oops! It's error sorry. Please configuration fcitx by yourself."
-#	exit 1
-#
 fi
 
 echo "Oops! It's error sorry. Please configuration fcitx by yourself."
