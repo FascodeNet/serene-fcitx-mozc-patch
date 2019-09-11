@@ -38,6 +38,15 @@ echo "Placing custom settings to ~/.config/fcitx/ now..."
 cp -rb $EDIR/config/config-$CHOSELANG ~/.config/fcitx/config && \
 cp -rb $EDIR/profile/profile-$CHOSELANG ~/.config/fcitx/profile && \
 cp -rb $EDIR/conf ~/.config/fcitx/ && \
+
+# add config to xprofile for other linux distro
+#cat ~/.xprofile | grep "GTK_IM_MODULE=fcitx" > /dev/null
+#if [[ $? = 0 ]]; then
+#	echo GTK_IM_MODULE=fcitx >> ~/.xprofile
+#	echo QT_IM_MODULE=fcitx >> ~/.xprofile
+#	echo XMODIFIERS=@im=fcitx >> ~/.xprofile
+#fi
+
 echo "--------------------------------------"
 echo " INSTALL CONFIGS IS SUCCESSFULLY !!!! "
 echo "--------------------------------------"
