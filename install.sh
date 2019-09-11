@@ -36,6 +36,10 @@ if [[ -e ~/.config/fcitx/config ]]; then
 	echo "INSTALL CONFIGS IS SUCCESSFULLY !!!!" && \
 	exec fcitx -r > /dev/null 2>&1 && \
 	exit 0
+else
+	echo "Please relunch this installer again."
+	exec fcitx > /dev/null 2>&1 && \
+	sleep 5 && exit 1
 fi
 
 echo "Oops! It's error sorry. Please configuration fcitx by yourself."
