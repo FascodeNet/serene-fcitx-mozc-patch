@@ -9,6 +9,10 @@ fi
 
 # path to "config" dir
 CONFIGDIR=~/config
+if [[ -z $CONFIGDIR/config ]]; then
+	echo "No configration file found. Please configration fcitx by yourself."
+	exit 1
+fi
 
 # run fcitx to get default config
 exec fcitx
