@@ -30,15 +30,18 @@ if [[ -e ~/.config/fcitx/config ]]; then
 	echo "Placing custom settings to ~/.config/fcitx/ now..."
 
 	# true
-	echo $EDIR
 	cp -rb $EDIR/config/config-$CHOSELANG ~/.config/fcitx/config && \
 	cp -rb $EDIR/profile/profile-$CHOSELANG ~/.config/fcitx/profile && \
 	cp -rb $EDIR/conf ~/.config/fcitx/ && \
-	echo "INSTALL CONFIGS IS SUCCESSFULLY !!!!" && \
+	echo "--------------------------------------"
+	echo " INSTALL CONFIGS IS SUCCESSFULLY !!!! "
+	echo "--------------------------------------"
 	exec fcitx -r > /dev/null 2>&1 && \
 	exit 0
 else
-	echo "Please relunch this installer again."
+	echo "-----------------------------------------"
+	echo " !!!! PLEASE RELAUNCH THE INSTALLER !!!! "
+	echo "-----------------------------------------"
 	exec fcitx > /dev/null 2>&1 && \
 	exit 1
 fi
