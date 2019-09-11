@@ -7,15 +7,21 @@ if [[ -z $DISPLAY ]]; then
 	exit 1
 fi
 
-# path to "config" dir
-CONFIGDIR=~/serene-fcitx-mozc-patch/config
-if [[ -z $CONFIGDIR/config ]]; then
+# path to ExtractedDirectory
+EDIR=~/serene-fcitx-mozc-patch
+if [[ -z $EDIR/config/config ]]; then
 	echo "No configration file found. Please configration fcitx by yourself."
 	exit 1
 fi
 
-# run fcitx to get default config
-exec fcitx > /dev/null 2>&1 && \
+# keyboard layout jp or us
+echo "Keymap to use ja_JP:1 en_US:2 (1/2) Default=1 : "
+read ANSWER
+
+case $ANSWER in
+	"2" ) CHOSELANG=us && echo "en_US";;
+	* ) CHOSELANG=jp && echo "ja_JP";;
+esac
 
 # check the existence of fcitx config dir and put config to it
 if [[ -e ~/.config/fcitx/config ]]; then
@@ -24,10 +30,20 @@ if [[ -e ~/.config/fcitx/config ]]; then
 	echo "Placing custom settings to ~/.config/fcitx/ now..."
 
 	# true
-	cp -rb $CONFIGDIR/* ~/.config/fcitx/ && \
+	echo $EDIR
+	cp -rb $EDIR/config/* ~/.config/fcitx/ && \
+	cp -rb $EDIR/profile/profile-$CHOSELANG ~/.config/fcitx/profile && \
 	echo "INSTALL CONFIGS IS SUCCESSFULLY !!!!" && \
 	exec fcitx -r > /dev/null 2>&1 && \
 	exit 0
+else
+	# run fcitx to get default config
+	exec fcitx > /dev/null 2>&1 && wait 3
+
+	# failed message
+	echo "Please run installer again."
+
+	exit 1
 fi
 
 echo "Oops! It's error sorry. Please configuration fcitx by yourself."
