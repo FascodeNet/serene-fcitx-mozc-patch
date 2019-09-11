@@ -31,8 +31,9 @@ if [[ -e ~/.config/fcitx/config ]]; then
 
 	# true
 	echo $EDIR
-	cp -rb $EDIR/config/* ~/.config/fcitx/ && \
+	cp -rb $EDIR/config/config-$CHOSELANG ~/.config/fcitx/config && \
 	cp -rb $EDIR/profile/profile-$CHOSELANG ~/.config/fcitx/profile && \
+	cp -rb $EDIR/conf ~/.config/fcitx/ && \
 	echo "INSTALL CONFIGS IS SUCCESSFULLY !!!!" && \
 	exec fcitx -r > /dev/null 2>&1 && \
 	exit 0
