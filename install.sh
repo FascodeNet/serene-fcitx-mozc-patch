@@ -26,6 +26,7 @@ if [[ -e ~/.config/fcitx/config ]]; then
 	# true
 	cp -rb $CONFIGDIR/* ~/.config/fcitx/ && \
 	echo "INSTALL CONFIGS IS SUCCESSFULLY !!!!" && \
+	exec fcitx -r && \
 	exit 0
 fi
 
