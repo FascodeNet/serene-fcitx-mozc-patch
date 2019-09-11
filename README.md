@@ -1,6 +1,6 @@
 # serene-fcitx-mozc-patch
 Japanese Input Enabling in fcitx-mozc.<br>
-This required package *fcitx* and *fcitx-mozc*<br>
+This required package *fcitx* and *fcitx-mozc*.<br>
 Start the installer with the following code.<br>
 
 ```bash
