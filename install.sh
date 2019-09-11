@@ -39,7 +39,7 @@ if [[ -e ~/.config/fcitx/config ]]; then
 else
 	echo "Please relunch this installer again."
 	exec fcitx > /dev/null 2>&1 && \
-	hoge && exit 1
+	exit 1
 fi
 
 echo "Oops! It's error sorry. Please configuration fcitx by yourself."
