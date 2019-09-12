@@ -1,5 +1,7 @@
 #!/bin/bash
 
+EDIR=$PWD
+
 # check i'm in gui or cli
 if [[ -z $DISPLAY ]]; then
 	# NO DISPLAY FOUND !!!! 
@@ -36,11 +38,18 @@ case $ANSWER in
 	* ) CHOSELANG=jp && echo "Keymap is ja_JP";;
 esac
 
+# Ask root password.
+printf "Please enter your password. (The password is used to create setting files.)"
+read -sp root_password
+
 # installing message
 echo "Placing custom settings to ~/.config/fcitx/ now..."
 cp -rb $EDIR/config/config-$CHOSELANG ~/.config/fcitx/config && \
 cp -rb $EDIR/profile/profile-$CHOSELANG ~/.config/fcitx/profile && \
 cp -rb $EDIR/conf ~/.config/fcitx/ && \
+echo $root_password | sudo -s cp -rb $EDIR/config/config-$CHOSELANG /etc/skel/.config/fcitx/config && \
+echo $root_password | sudo -s cp -rb $EDIR/profile/profile-$CHOSELANG /etc/skel/.config/fcitx/profile && \
+echo $root_password | sudo -s cp -rb $EDIR/conf /etc/skel/.config/fcitx/ && \
 
 # add config to xprofile for other linux distro
 #cat ~/.xprofile | grep "GTK_IM_MODULE=fcitx" > /dev/null
@@ -55,6 +64,9 @@ if [[ $? = 0 -a ! $ID_LIKE = "debian" ]]; then
 	echo GTK_IM_MODULE=fcitx >> ~/.xprofile
 	echo QT_IM_MODULE=fcitx >> ~/.xprofile
 	echo XMODIFIERS=@im=fcitx >> ~/.xprofile
+	echo $root_password | sudo -s echo GTK_IM_MODULE=fcitx >> ~/.xprofile
+	echo $root_password | sudo -s echo QT_IM_MODULE=fcitx >> ~/.xprofile
+	echo $root_password | sudo -s echo XMODIFIERS=@im=fcitx >> ~/.xprofile
 fi
 
 cat << EOS
