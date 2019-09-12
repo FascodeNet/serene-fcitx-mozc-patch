@@ -2,7 +2,7 @@
 
 # check i'm in gui or cli
 if [[ -z $DISPLAY ]]; then
-	# NO DISPLAY FOUND !!!! F*CK !!!!!!
+	# NO DISPLAY FOUND !!!! 
 	echo "You must run this script only in GUI !"
 	exit 1
 fi
@@ -17,15 +17,18 @@ fi
 # check the existence of fcitx config dir and put config to it
 if [[ ! -e ~/.config/fcitx/config ]]; then
 
-	echo "-----------------------------------------"
-	echo " !!!! PLEASE RELAUNCH THE INSTALLER !!!! "
-	echo "-----------------------------------------"
+cat << EOS
+-----------------------------------------
+!!!! PLEASE RELAUNCH THE INSTALLER !!!! 
+-----------------------------------------
+EOS
+
 	exec fcitx > /dev/null 2>&1 && \
 	exit 1
 fi
 
 # keyboard layout jp or us
-echo "Keymap to use ja_JP:1 en_US:2 (1/2) Default=1 : "
+echo "Please enter keymap.  ( 1:ja_JP  2:en_US) Default=1 : "
 read ANSWER
 
 case $ANSWER in
@@ -41,15 +44,24 @@ cp -rb $EDIR/conf ~/.config/fcitx/ && \
 
 # add config to xprofile for other linux distro
 #cat ~/.xprofile | grep "GTK_IM_MODULE=fcitx" > /dev/null
-#if [[ $? = 0 ]]; then
-#	echo GTK_IM_MODULE=fcitx >> ~/.xprofile
-#	echo QT_IM_MODULE=fcitx >> ~/.xprofile
-#	echo XMODIFIERS=@im=fcitx >> ~/.xprofile
-#fi
+if [[ -f /etc/os-release ]]; then
+	source /etc/os-release
+else
+	echo "/ etc / os-release does not exist." >&2
+	ID_LIKE=other
+fi
 
-echo "--------------------------------------"
-echo " INSTALL CONFIGS IS SUCCESSFULLY !!!! "
-echo "--------------------------------------"
+if [[ $? = 0 -a ! $ID_LIKE = "debian" ]]; then
+	echo GTK_IM_MODULE=fcitx >> ~/.xprofile
+	echo QT_IM_MODULE=fcitx >> ~/.xprofile
+	echo XMODIFIERS=@im=fcitx >> ~/.xprofile
+fi
+
+cat << EOS
+--------------------------------------
+INSTALL CONFIGS IS SUCCESSFULLY !!!! 
+--------------------------------------
+EOS
 exec fcitx -r > /dev/null 2>&1 && \
 exit 0
 

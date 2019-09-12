@@ -4,7 +4,7 @@ This required package *fcitx* and *fcitx-mozc*.<br>
 Start the installer with the following code.<br>
 
 ```bash
+cd
 git clone https://github.com/yamad-linuxer/serene-fcitx-mozc-patch
-EDIR=/path/to/files
-bash $EDIR/install.sh
+bash ./serene-fcitx-mozc-patch/install.sh
 ```
