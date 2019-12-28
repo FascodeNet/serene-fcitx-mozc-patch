@@ -14,6 +14,8 @@ if [[ -z $EDIR/config/config ]]; then
 	exit 1
 fi
 
+fcitx > /dev/null 2>&1 &
+
 # check the existence of fcitx config dir and put config to it
 if [[ ! -e ~/.config/fcitx/config ]]; then
 
