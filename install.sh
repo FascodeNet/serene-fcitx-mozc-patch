@@ -29,9 +29,9 @@ echo "Keymap to use (jp106):1 (US):2 Default=1 : "
 read ANSWER
 
 case $ANSWER in
-	"1" ) CHOSELANG=jp && echo "Keymap is en_US";;
-	"2" ) CHOSELANG=us && echo "Keymap is ja_JP";;
-	"" ) CHOSELANG=jp && echo "Keymap is en_US";;
+	"1" ) CHOSELANG=jp && echo "Keymap is jp106";;
+	"2" ) CHOSELANG=us && echo "Keymap is US";;
+	"" ) CHOSELANG=jp && echo "Keymap is jp106";;
 	* ) echo "error" && exit 1;;
 esac
 
