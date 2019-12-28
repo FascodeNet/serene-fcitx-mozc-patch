@@ -21,16 +21,18 @@ if [[ ! -e ~/.config/fcitx/config ]]; then
 	echo " !!!! PLEASE RELAUNCH THE INSTALLER !!!! "
 	echo "-----------------------------------------"
 	exec fcitx > /dev/null 2>&1 && \
-	exit 1
+	exit 2
 fi
 
 # keyboard layout jp or us
-echo "Keymap to use ja_JP:1 en_US:2 (1/2) Default=1 : "
+echo "Keymap to use (jp106):1 (US):2 Default=1 : "
 read ANSWER
 
 case $ANSWER in
-	"2" ) CHOSELANG=us && echo "Keymap is en_US";;
-	* ) CHOSELANG=jp && echo "Keymap is ja_JP";;
+	"1" ) CHOSELANG=jp && echo "Keymap is en_US";;
+	"2" ) CHOSELANG=us && echo "Keymap is ja_JP";;
+	"" ) CHOSELANG=jp && echo "Keymap is en_US";;
+	* ) echo "error" && exit 1;;
 esac
 
 # installing message
