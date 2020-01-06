@@ -16,6 +16,8 @@ if [[ -z $EDIR/config/config ]]; then
 	exit 1
 fi
 
+fcitx -r > /dev/null 2>&1 &
+
 # check the existence of fcitx config dir and put config to it
 if [[ ! -e ~/.config/fcitx/config ]]; then
 
@@ -26,16 +28,18 @@ cat << EOS
 EOS
 
 	exec fcitx > /dev/null 2>&1 && \
-	exit 1
+	exit 2
 fi
 
 # keyboard layout jp or us
-echo "Please enter keymap.  ( 1:ja_JP  2:en_US) Default=1 : "
+echo "Keymap to use (jp106):1 (US):2 Default=1 : "
 read ANSWER
 
 case $ANSWER in
-	"2" ) CHOSELANG=us && echo "Keymap is en_US";;
-	* ) CHOSELANG=jp && echo "Keymap is ja_JP";;
+	"1" ) CHOSELANG=jp && echo "Keymap is jp106";;
+	"2" ) CHOSELANG=us && echo "Keymap is US";;
+	"" ) CHOSELANG=jp && echo "Keymap is jp106";;
+	* ) echo "error" && exit 1;;
 esac
 
 # Ask root password.
