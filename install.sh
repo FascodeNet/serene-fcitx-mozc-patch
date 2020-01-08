@@ -1,8 +1,10 @@
 #!/bin/bash
 
+EDIR=$PWD
+
 # check i'm in gui or cli
 if [[ -z $DISPLAY ]]; then
-	# NO DISPLAY FOUND !!!! F*CK !!!!!!
+	# NO DISPLAY FOUND !!!! 
 	echo "You must run this script only in GUI !"
 	exit 1
 fi
@@ -19,9 +21,12 @@ fcitx -r > /dev/null 2>&1 &
 # check the existence of fcitx config dir and put config to it
 if [[ ! -e ~/.config/fcitx/config ]]; then
 
-	echo "-----------------------------------------"
-	echo " !!!! PLEASE RELAUNCH THE INSTALLER !!!! "
-	echo "-----------------------------------------"
+cat << EOS
+-----------------------------------------
+!!!! PLEASE RELAUNCH THE INSTALLER !!!! 
+-----------------------------------------
+EOS
+
 	exec fcitx > /dev/null 2>&1 && \
 	exit 2
 fi
@@ -37,23 +42,42 @@ case $ANSWER in
 	* ) echo "error" && exit 1;;
 esac
 
+# Ask root password.
+printf "Please enter your password. (The password is used to create setting files.)"
+read -sp root_password
+
 # installing message
 echo "Placing custom settings to ~/.config/fcitx/ now..."
 cp -rb $EDIR/config/config-$CHOSELANG ~/.config/fcitx/config && \
 cp -rb $EDIR/profile/profile-$CHOSELANG ~/.config/fcitx/profile && \
 cp -rb $EDIR/conf ~/.config/fcitx/ && \
+echo $root_password | sudo -s cp -rb $EDIR/config/config-$CHOSELANG /etc/skel/.config/fcitx/config && \
+echo $root_password | sudo -s cp -rb $EDIR/profile/profile-$CHOSELANG /etc/skel/.config/fcitx/profile && \
+echo $root_password | sudo -s cp -rb $EDIR/conf /etc/skel/.config/fcitx/ && \
 
 # add config to xprofile for other linux distro
 #cat ~/.xprofile | grep "GTK_IM_MODULE=fcitx" > /dev/null
-#if [[ $? = 0 ]]; then
-#	echo GTK_IM_MODULE=fcitx >> ~/.xprofile
-#	echo QT_IM_MODULE=fcitx >> ~/.xprofile
-#	echo XMODIFIERS=@im=fcitx >> ~/.xprofile
-#fi
+if [[ -f /etc/os-release ]]; then
+	source /etc/os-release
+else
+	echo "/ etc / os-release does not exist." >&2
+	ID_LIKE=other
+fi
 
-echo "--------------------------------------"
-echo " INSTALL CONFIGS IS SUCCESSFULLY !!!! "
-echo "--------------------------------------"
+if [[ $? = 0 -a ! $ID_LIKE = "debian" ]]; then
+	echo GTK_IM_MODULE=fcitx >> ~/.xprofile
+	echo QT_IM_MODULE=fcitx >> ~/.xprofile
+	echo XMODIFIERS=@im=fcitx >> ~/.xprofile
+	echo $root_password | sudo -s echo GTK_IM_MODULE=fcitx >> ~/.xprofile
+	echo $root_password | sudo -s echo QT_IM_MODULE=fcitx >> ~/.xprofile
+	echo $root_password | sudo -s echo XMODIFIERS=@im=fcitx >> ~/.xprofile
+fi
+
+cat << EOS
+--------------------------------------
+INSTALL CONFIGS IS SUCCESSFULLY !!!! 
+--------------------------------------
+EOS
 exec fcitx -r > /dev/null 2>&1 && \
 exit 0
 
