@@ -6,6 +6,15 @@ if [ ! $UID -eq 0 ]; then
 	exit 1
 fi
 
+# fcitx already installed?
+dpkg -l fcitx >/dev/null 2>&1 || \
+	echo "install fcitx before run this script."
+dpkg -l fcitx-mozc >/dev/null 2>&1 || \
+	echo "install fcitx-mozc before run this script."
+if [ -n $? ]; then
+	exit 1
+fi
+
 # extracted directory
 EDIR=$(cd $(dirname $0); pwd)
 
