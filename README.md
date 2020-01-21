@@ -5,6 +5,5 @@ Start the installer with the following code.<br>
 
 ```bash
 git clone https://github.com/yamad-linuxer/serene-fcitx-mozc-patch
-cd path/to/serene-fcitx-mozc-patch
-bash install.sh
+sudo bash install.sh
 ```
